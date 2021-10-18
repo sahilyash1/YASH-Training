@@ -1,0 +1,420 @@
+1. put student data into a file student.dat
+101 sabbir 45 54 67 81 71 66
+102 amit 95 66 62 88 79 63
+....
+Read data from student.dat and compute percentage of each student and sort student data based on percentage.
+
+
+package com.serialization;
+
+import java.io.Serializable;
+import java.util.Arrays;
+
+public class Student implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int id;
+	private String name;
+	private int[] marks;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int[] getMarks() {
+		return marks;
+	}
+	public void setMarks(int[] marks) {
+		this.marks = marks;
+	}
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", marks=" + Arrays.toString(marks) + "]";
+	}
+	
+	
+}
+
+
+package com.serialization;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PersistStudentData {
+
+	public static void main(String[] args) {
+
+		List<Student> studentList = new ArrayList<>();
+
+		Student student1 = new Student();
+		student1.setId(101);
+		student1.setName("Rishabh");
+		int marks1[] = { 80, 78, 96, 55, 60 };
+		student1.setMarks(marks1);
+		studentList.add(student1);
+
+		Student student2 = new Student();
+		student2.setId(102);
+		student2.setName("Raghav");
+		int marks2[] = { 70, 68, 86, 75, 77 };
+		student2.setMarks(marks2);
+		studentList.add(student2);
+
+		Student student3 = new Student();
+		student3.setId(103);
+		student3.setName("Priyansh");
+		int marks3[] = { 90, 78, 96, 95, 69 };
+		student3.setMarks(marks3);
+		studentList.add(student3);
+
+		Student student4 = new Student();
+		student4.setId(104);
+		student4.setName("Riya");
+		int marks4[] = { 50, 68, 56, 65, 80 };
+		student4.setMarks(marks4);
+		studentList.add(student4);
+
+		try (OutputStream output = new FileOutputStream("D:\\FileIO\\Student.dat");
+				ObjectOutputStream object = new ObjectOutputStream(output);) {
+			object.writeObject(studentList);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+2. Create a class Item with following attributes
+
+   itemId int
+   itemDescription String
+   itemQuantityAvailable int
+   itemUnitPrice double
+   itemDiscountPercentage int
+
+ Serialize List of Items(at least 4 items) and deserialize those items and print on console.
+
+package com.serialization;
+
+import java.io.Serializable;
+
+public class Item implements Serializable
+{
+	  
+	private int itemId ;
+	private   String  itemDescription ;
+	private int  itemQuantityAvailable ;
+	private  double itemUnitPrice ;
+	private int itemDiscountPercentage ;
+	  
+	public Item() {
+			super();
+	}
+
+	public int getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+
+	public String getItemDescription() {
+		return itemDescription;
+	}
+
+	public void setItemDescription(String itemDescription) {
+		this.itemDescription = itemDescription;
+	}
+
+	public int getItemQuantityAvailable() {
+		return itemQuantityAvailable;
+	}
+
+	public void setItemQuantityAvailable(int itemQuantityAvailable) {
+		this.itemQuantityAvailable = itemQuantityAvailable;
+	}
+
+	public double getItemUnitPrice() {
+		return itemUnitPrice;
+	}
+
+	public void setItemUnitPrice(double itemUnitPrice) {
+		this.itemUnitPrice = itemUnitPrice;
+	}
+
+	public int getItemDiscountPercentage() {
+		return itemDiscountPercentage;
+	}
+
+	public void setItemDiscountPercentage(int itemDiscountPercentage) {
+		this.itemDiscountPercentage = itemDiscountPercentage;
+	}
+
+	@Override
+	public String toString() {
+		return "Item [itemId=" + itemId + ", itemDescription=" + itemDescription + ", itemQuantityAvailable="
+				+ itemQuantityAvailable + ", itemUnitPrice=" + itemUnitPrice + ", itemDiscountPercentage="
+				+ itemDiscountPercentage + "]";
+	}
+	  
+	  
+}
+
+package com.serialization;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+
+public class ItemSerialize 
+{
+	
+	public static void main(String[] args) throws Exception
+	{
+		 ArrayList<Item> list = new ArrayList<Item>();
+		  
+		  Item item1 = new Item();
+		  item1.setItemId(101);
+		  item1.setItemDescription("Good - Better - Best");
+		  item1.setItemQuantityAvailable(10);
+		  item1.setItemUnitPrice(25000);
+		  item1.setItemDiscountPercentage(8);
+		  
+		  Item item2 = new Item();
+		  item2.setItemId(102);
+		  item2.setItemDescription("Good - Better - Best");
+		  item2.setItemQuantityAvailable(20);
+		  item2.setItemUnitPrice(35000);
+		  item2.setItemDiscountPercentage(8);
+		  
+		  Item item3 = new Item();
+		  item3.setItemId(103);
+		  item3.setItemDescription("Good - Better - Best");
+		  item3.setItemQuantityAvailable(30);
+		  item3.setItemUnitPrice(45000);
+		  item3.setItemDiscountPercentage(8);
+		  
+		  Item item4 = new Item();
+		  item4.setItemId(104);
+		  item4.setItemDescription("Good - Better - Best");
+		  item4.setItemQuantityAvailable(10);
+		  item4.setItemUnitPrice(45000);
+		  item4.setItemDiscountPercentage(8);
+		  
+		  Item item5 = new Item();
+		  item5.setItemId(105);
+		  item5.setItemDescription("Good - Better - Best");
+		  item5.setItemQuantityAvailable(5);
+		  item5.setItemUnitPrice(70000);
+		  item5.setItemDiscountPercentage(8);
+		  
+		  list.add(item1);
+		  list.add(item2);
+		  list.add(item3);
+		  list.add(item4);
+		  list.add(item5);
+  
+	   FileOutputStream FOS = new FileOutputStream("D:\\FileIO\\Item.ser");
+	   ObjectOutputStream OOS = new ObjectOutputStream(FOS);
+	   OOS.writeObject(list);
+	   
+	   FileInputStream FIS = new FileInputStream("D:\\FileIO\\Item.ser");
+	   ObjectInputStream OIS = new ObjectInputStream(FIS);
+	   
+	   ArrayList list1 = (ArrayList)OIS.readObject();
+	   
+	   System.out.println("Item ID :"+"ItemDecs : "+"ItemQuantity : "+"ItemPrice : "+"ItemDiscount " );
+	   for(Object obj : list1)
+	   {
+		  if(obj instanceof Item)
+		  {
+			  System.out.println(((Item) obj).getItemId()+" : "+((Item) obj).getItemDescription()+" : "+((Item) obj).getItemQuantityAvailable()+" : "+((Item) obj).getItemUnitPrice()+" : "+((Item) obj).getItemDiscountPercentage()+"%");
+		  }
+	   }
+	   
+
+	}
+
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3. Create a class Employee with following attributes
+
+    empId
+    empFirstName
+    empLastName
+    empDOB
+    empGender
+
+  create subclass Manager of Employee with following attributes
+
+   managerId
+
+  Serialize object of manager except empDOB and deserialize and print details on console.
+
+
+package com.serialization;
+import java.io.Serializable;
+
+public class Employee implements Serializable
+{
+	
+	private int empId;
+    private String  empFirstName;
+    private String empLastName;
+    private String empDOB;
+    private String empGender;
+    
+    public Employee() {
+		super();
+	}
+
+	public int getEmpId() {
+		return empId;
+	}
+
+	public void setEmpId(int empId) {
+		this.empId = empId;
+	}
+
+	public String getEmpFirstName() {
+		return empFirstName;
+	}
+
+	public void setEmpFirstName(String empFirstName) {
+		this.empFirstName = empFirstName;
+	}
+
+	public String getEmpLastName() {
+		return empLastName;
+	}
+
+	public void setEmpLastName(String empLastName) {
+		this.empLastName = empLastName;
+	}
+
+	public String getEmpDOB() {
+		return empDOB;
+	}
+
+	public void setEmpDOB(String empDOB) {
+		this.empDOB = empDOB;
+	}
+
+	public String getEmpGender() {
+		return empGender;
+	}
+
+	public void setEmpGender(String empGender) {
+		this.empGender = empGender;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [empId=" + empId + ", empFirstName=" + empFirstName + ", empLastName=" + empLastName
+				+ ", empDOB=" + empDOB + ", empGender=" + empGender + "]";
+	}
+    
+    
+}
+
+
+import java.io.Serializable;
+
+public class Manager extends Employee implements Serializable
+{
+	
+	private int managerId;
+	transient private String empDOB;
+	
+	public Manager() {
+		super();
+	}
+
+	public int getManagerId() {
+		return managerId;
+	}
+
+	public void setManagerId(int managerId) {
+		this.managerId = managerId;
+	}
+
+	public String getEmpDOB() {
+		return empDOB;
+	}
+
+	public void setEmpDOB(String empDOB) {
+		this.empDOB = empDOB;
+	}
+
+	@Override
+	public String toString() {
+		return "Manager [managerId=" + managerId + "]";
+	}   
+
+}
+
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+public class EmployeeManagerSerialize 
+{
+
+	public static void main(String[] args) throws Exception
+	{
+		Manager manager = new Manager();
+		manager.setManagerId(001);
+		manager.setEmpId(101);
+		manager.setEmpFirstName("Lateek");
+		manager.setEmpLastName("Tare");
+		manager.setEmpDOB("01-05-1980");
+		manager.setEmpGender("Male");
+		
+
+		   FileOutputStream FOS = new FileOutputStream("D:\\FileIO\\EmployeeManager.ser");
+		   ObjectOutputStream OOS = new ObjectOutputStream(FOS);
+		   OOS.writeObject(manager);
+		   
+		   FileInputStream FIS = new FileInputStream("D:\\FileIO\\EmployeeManager.ser");
+		   ObjectInputStream OIS = new ObjectInputStream(FIS);
+		   
+		   Manager M = (Manager)OIS.readObject();
+		   System.out.println("ManagerID :"+" EmpID :"+" EmpFirstName :"+" EmplastName :"+" EmpDOB :"+" EmpGender");
+		   System.out.println(M.getManagerId()+" : "+M.getEmpId()+" : "+M.getEmpFirstName()+" : "+M.getEmpLastName()+" : "+M.getEmpDOB()+" : "+M.getEmpGender());
+	
+	}
+
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
