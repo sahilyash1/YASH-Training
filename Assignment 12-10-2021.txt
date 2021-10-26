@@ -1,0 +1,269 @@
+1. Create an functional interface with declaration of following method
+
+   public int max(int[] array);
+
+provide implementation of above method using lambda expression
+
+
+package Max_Array_Interface;
+
+@FunctionalInterface
+public interface ComputeMaxElement {
+	public Integer max(Integer[] arr);
+}
+
+
+
+
+package Max_Array_Interface;
+
+import java.util.Arrays;
+
+public class MainClass {
+	public static void main(String[] args) {
+		Integer arr[] = new Integer[] {34,21,32,556,3,2,76,23,9,200,675,3};
+		System.out.println("Given Array : ");
+		System.out.println(Arrays.asList(arr));
+		ComputeMaxElement cme=(x)->{
+			Integer[] copy = Arrays.copyOf(x, x.length);
+			Arrays.sort(copy);
+			return copy[x.length-1];
+		};
+		Integer max = cme.max(arr);
+		System.out.println("\nMax element : "+max);
+	}
+}
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+
+2. Create a class Student with following attributes
+
+   int rollNo
+   String firstName
+   String lastName
+   int semester1Marks;
+   int semester2Marks;
+   int semester3Marks;
+   ...
+   int semester6Marks;
+
+  Create an  new object of Student using Method Reference
+  Find the average of one student marks using Method Reference
+  
+
+package com.java8;
+
+public class Student {
+	private String firstName;
+	private String lastName;
+	private int sem1Marks;
+	private int sem2Marks;
+	private int sem3Marks;
+	private int sem4Marks;
+	private int sem5Marks;
+	private int sem6Marks;
+
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public int getSem1Marks() {
+		return sem1Marks;
+	}
+	public void setSem1Marks(int sem1Marks) {
+		this.sem1Marks = sem1Marks;
+	}
+	public int getSem2Marks() {
+		return sem2Marks;
+	}
+	public void setSem2Marks(int sem2Marks) {
+		this.sem2Marks = sem2Marks;
+	}
+	public int getSem3Marks() {
+		return sem3Marks;
+	}
+	public void setSem3Marks(int sem3Marks) {
+		this.sem3Marks = sem3Marks;
+	}
+	public int getSem4Marks() {
+		return sem4Marks;
+	}
+	public void setSem4Marks(int sem4Marks) {
+		this.sem4Marks = sem4Marks;
+	}
+
+	public int getSem5Marks() {
+		return sem5Marks;
+	}
+	public void setSem5Marks(int sem5Marks) {
+		this.sem5Marks = sem5Marks;
+	}
+	public int getSem6Marks() {
+		return sem6Marks;
+	}
+	public void setSem6Marks(int sem6Marks) {
+		this.sem6Marks = sem6Marks;
+	}
+
+	
+	@Override
+	public String toString() {
+		return "Student [firstName=" + firstName + ", lastName=" + lastName + ", sem1Marks=" + sem1Marks
+				+ ", sem2Marks=" + sem2Marks + ", sem3Marks=" + sem3Marks + ", sem4Marks=" + sem4Marks + ", sem5Marks="
+				+ sem5Marks + ", sem6Marks=" + sem6Marks + "]";
+	}
+	public double getAverageMarks() {
+		int totalMarks = sem1Marks + sem2Marks + sem3Marks + sem4Marks + sem5Marks + sem6Marks;
+		return totalMarks / 6;
+	}
+}
+
+
+
+
+package com.java8;
+
+@FunctionalInterface
+public interface StudentFactory {
+	public Student getInstance();
+}
+
+
+
+package com.java8;
+
+public class MethodReferenceStudent {
+
+	public static void main(String[] args) {
+		StudentFactory factory = Student::new;
+		
+		Student student = factory.getInstance();
+		student.setFirstName("John");
+		student.setLastName("cena");
+		student.setSem1Marks(66);
+		student.setSem2Marks(83);
+		student.setSem3Marks(81);
+		student.setSem4Marks(75);
+		student.setSem5Marks(63);
+		student.setSem6Marks(72);
+		
+		ComputeAverage average = student::getAverageMarks;
+		System.out.println("Average marks = "+ average.average());
+
+	}
+
+}
+
+--------------------------------------------------------------------------------------------------------------------------
+3. Create a list of objects of class Product using Builder design pattern.
+
+     int productId
+     int productDescription
+     int productType
+
+
+package com.java8;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class Product {
+
+	private int productId;
+	private String productDescription;
+	private String productType;
+
+	public Product() {}
+	public Product(Product.Builder builder) {
+		this.productId = builder.productId;
+		this.productDescription = builder.productDescription;
+		this.productType = builder.productType;
+	}
+
+	public int getProductId() {
+		return productId;
+	}
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+	public String getProductDescription() {
+		return productDescription;
+	}
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
+	}
+	public String getProductType() {
+		return productType;
+	}
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+
+	private static class Builder {
+		private int productId;
+		private String productDescription;
+		private String productType;
+
+		public Builder() {}
+		public Builder setProductId(int productId) {
+			this.productId = productId;
+			return this;
+		}
+
+		public Builder setProductDescription(String productDescription) {
+			this.productDescription = productDescription;
+			return this;
+		}
+		public Builder setProductType(String productType) {
+			this.productType = productType;
+			return this;
+		}
+		public Product build() {
+			return new Product(this);
+		}
+
+	}
+
+	public static List<Product> getProductList() {
+		return Arrays.asList(
+				new Product.Builder().setProductId(1001).setProductDescription("Brand New with Updated Features")
+						.setProductType("New").build(),
+				new Product.Builder().setProductId(1002).setProductDescription("Good Condition")
+						.setProductType("Refurbished").build(),
+				new Product.Builder().setProductId(1003).setProductDescription("Working Slow as used for 3 years")
+						.setProductType("Used").build());
+	}
+	@Override
+	public String toString() {
+		return "Product [productId = " + productId + ", productDescription = " + productDescription + ", productType = "
+				+ productType + "]";
+	}
+
+	
+}
+
+
+
+
+package com.java8;
+
+import java.util.List;
+
+public class ProductBuilder {
+
+	public static void main(String[] args) {
+		List<Product> product = Product.getProductList();
+		product.forEach(System.out::println);
+	}
+
+}
